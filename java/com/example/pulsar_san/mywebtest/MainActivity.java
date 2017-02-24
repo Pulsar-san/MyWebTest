@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     static final String API_KEY = "YOUR_API_KEY"; // Remplacer YOUR_API_KEY par la clé qu'on voua donné
     static final String API_DOM = "https://www.fanfic-fr.org/";
-    /*static final String API_URL = "https://www.fanfic-fr.org/api/livre/20894/chapitres";*/
     static CookieManager cookieManager = new CookieManager();
 
     @Override
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         responseView = (TextView) findViewById(R.id.responseView);
-//        emailText = (EditText) findViewById(R.id.emailText);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         Button loginButton = (Button) findViewById(R.id.loginButton);
@@ -153,20 +151,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("INFO", response);
             responseView.setText(response);
             // TODO: check this.exception
-            // TODO: do something with the feed
-
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            // TODO: do something with the ident datas
         }
     }
 
@@ -230,20 +215,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i("INFO", response);
             responseView.setText(response);
             // TODO: check this.exception
-            // TODO: do something with the feed
-
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
         }
     }
 
@@ -298,12 +269,9 @@ public class MainActivity extends AppCompatActivity {
                     if (cookieHandler instanceof CookieManager) {
                         ((CookieManager)cookieHandler).getCookieStore().removeAll();
                     }
-                    //if (cookieManager.getCookieStore().getCookies().size() > 0) {
                     Log.d("COOKIES_NULL_AFTER", String.valueOf(cookieManager.getCookieStore().getCookies()));
-                    //}
                     finish();
                 }
-                //return "";
             }
             catch(Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
@@ -319,7 +287,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i("INFO", response);
             responseView.setText(response);
             // TODO: check this.exception
-            // TODO: do something with the feed
         }
     }
 
@@ -385,20 +352,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("INFO", response);
             responseView.setText(response);
             // TODO: check this.exception
-            // TODO: do something with the feed
-
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            // TODO: do something with the categories list
         }
     }
 }
