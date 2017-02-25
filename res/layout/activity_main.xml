@@ -56,6 +56,22 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Catégories"/>
 
+    <Button
+        android:id="@+id/livreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:text="Livre"/>
+
+    <Button
+        android:id="@+id/chapitresButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:text="Chapitres"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
