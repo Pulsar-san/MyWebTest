@@ -90,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        CloseAppActivity.closeApp(this);
+        Log.d("onStop: ","onStop()");
+    }
+
     class LogInTask extends AsyncTask<Void, Void, String> {
         private Exception exception;
         static final String COOKIES_HEADER = "Set-Cookie";
