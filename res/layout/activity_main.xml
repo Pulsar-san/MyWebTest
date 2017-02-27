@@ -57,6 +57,14 @@
         android:text="Catégories"/>
 
     <Button
+        android:id="@+id/fandomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:text="Fandom"/>
+
+    <Button
         android:id="@+id/livreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
