@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     EditText emailText;
     TextView responseView;
     ProgressBar progressBar;
-    static final String API_KEY = "dc869f03bc9c9fdcdb12b2f0120e0bc641bc2e20053722fa6c13eb7d90aab63c"; // Remplacer YOUR_API_KEY par la clé qu'on voua donné
+    static final String API_KEY = "YOUR_API_KEY"; // Remplacer YOUR_API_KEY par la clé qu'on voua donné
     static final String API_DOM = "https://www.fanfic-fr.org/";
     static CookieManager cookieManager = new CookieManager();
 
@@ -70,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new RetrieveCategoriesTask().execute();
+            }
+        });
+
+        Button fandomButton = (Button) findViewById(R.id.fandomButton);
+        fandomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new RetrieveFandomTask().execute();
             }
         });
 
@@ -328,6 +336,76 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(API_URL + "?apik=" + API_KEY);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+                CookieHandler.setDefault(cookieManager);
+
+                if (cookieManager.getCookieStore().getCookies().size() > 0) {
+                    Log.d("COOKIES1", String.valueOf(cookieManager.getCookieStore().getCookies()));
+                    // While joining the Cookies, use ',' or ';' as needed. Most of the servers are using ';'
+                    urlConnection.setRequestProperty("Cookie", TextUtils.join(";",  cookieManager.getCookieStore().getCookies()));
+                }
+                Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
+                List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
+
+                if (cookiesHeader != null) {
+                    for (String cookie : cookiesHeader) {
+                        cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+                    }
+                    Log.d("COOKIES0", String.valueOf(cookieManager.getCookieStore().getCookies()));
+                }
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
+                }
+                finally{
+                    urlConnection.disconnect();
+                }
+            }
+            catch(Exception e) {
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String response) {
+            if(response == null) {
+                response = "THERE WAS AN ERROR";
+            }
+            progressBar.setVisibility(View.GONE);
+            Log.i("INFO", response);
+            responseView.setText(response);
+            // TODO: check this.exception
+            // TODO: do something with the categories list
+        }
+    }
+
+    class RetrieveFandomTask extends AsyncTask<Void, Void, String> {
+
+        private Exception exception;
+        static final String COOKIES_HEADER = "Set-Cookie";
+        static final String API_URL = "https://www.fanfic-fr.org/api/fandom/226/livres";
+        static final String page = "&page=173";
+        static final String nelem = "&ne=10";
+        static final String col = "&col=fic_modif";
+        static final String dir = "&dir=DESC";
+
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            responseView.setText("");
+        }
+
+        protected String doInBackground(Void... urls) {
+
+            try {
+                URL url = new URL(API_URL + "?apik=" + API_KEY + page + nelem + col + dir);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
